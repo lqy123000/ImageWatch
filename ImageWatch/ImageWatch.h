@@ -18,6 +18,7 @@ private slots:
 	void on_begin();
 	void on_prev();
 	void on_next();
+	void on_changeIndex();
 
 private:
 	void showImage();

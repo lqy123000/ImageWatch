@@ -13,6 +13,7 @@ ImageWatch::ImageWatch(QWidget *parent)
 	connect(ui.begin, &QPushButton::clicked, this, &ImageWatch::on_begin);
 	connect(ui.prev, &QPushButton::clicked, this, &ImageWatch::on_prev);
 	connect(ui.next, &QPushButton::clicked, this, &ImageWatch::on_next);
+	connect(ui.index, &QSpinBox::editingFinished, this, &ImageWatch::on_changeIndex);
 
 	m_scene = new QGraphicsScene();
 	ui.view->setScene(m_scene);  // 自定义的view，可以用QGraphicsView代替
@@ -65,6 +66,10 @@ void ImageWatch::on_begin()
 	{
 		showImage();
 	}
+
+	ui.total_count->setText(QString("/%1").arg(m_count));
+	ui.index->setMinimum(1);
+	ui.index->setMaximum(m_count);
 }
 
 void ImageWatch::on_prev()
@@ -103,6 +108,17 @@ void ImageWatch::on_next()
 	showImage();
 }
 
+void ImageWatch::on_changeIndex()
+{
+	if (m_count <= 1)
+	{
+		return;
+	}
+
+	m_index = ui.index->value() - 1;
+	showImage();
+}
+
 void ImageWatch::showImage()
 {
 	if (m_index < 0 || m_index >= m_count)
@@ -112,7 +128,7 @@ void ImageWatch::showImage()
 	}
 
 	ui.path->setText(m_filenames[m_index]);
-	ui.index->setText(QString("%1/%2").arg(m_index+1).arg(m_count));
+	ui.index->setValue(m_index+1);
 	m_scene->clear();
 
 	QString imagePath = m_baseDir + m_filenames[m_index];
