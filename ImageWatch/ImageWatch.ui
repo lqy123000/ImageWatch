@@ -30,6 +30,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="filter_suffix">
+       <property name="text">
+        <string>过滤后缀</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="begin">
        <property name="text">
         <string>开始</string>

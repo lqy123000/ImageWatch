@@ -59,7 +59,10 @@ void ImageWatch::on_begin()
 {
 	m_baseDir = ui.base_dir->text();
 	// TODO: 1.加入多线程避免文件太多导致界面卡住 2.加入取消操作 3. 可配置是否递归搜索
-	m_filenames = getFileList(m_baseDir, m_nameFilters, true, "\\");
+	if (ui.filter_suffix->isChecked())
+		m_filenames = getFileList(m_baseDir, m_nameFilters, true, "\\");
+	else
+		m_filenames = getFileList(m_baseDir, QStringList(), true, "\\");
 	m_count = m_filenames.size();
 	m_index = 0;
 	if (m_count > 0)
